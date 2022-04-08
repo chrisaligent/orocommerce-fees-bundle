@@ -1,0 +1,38 @@
+system_configuration:
+    groups:
+        aligent:
+            title: 'Aligent'
+        aligent_fees:
+            title: 'Fees'
+            icon: 'fa-usd'
+        configuration_segment:
+            title: 'Configuration'
+    fields:
+        aligent_fees.default_product_tax_code:
+            data_type: string
+            type: Symfony\Component\Form\Extension\Core\Type\TextType
+            priority: 10
+            options:
+                label: 'Default Product Tax Code'
+    tree:
+        system_configuration:
+            commerce:
+                children:
+                    aligent:
+                        children:
+                            aligent_fees:
+                                children:
+                                    configuration_segment:
+                                        children:
+                                            - aligent_fees.default_product_tax_code
+
+        website_configuration:
+            commerce:
+                children:
+                    aligent:
+                        children:
+                            aligent_fees:
+                                children:
+                                    configuration_segment:
+                                        children:
+                                            - aligent_fees.default_product_tax_code

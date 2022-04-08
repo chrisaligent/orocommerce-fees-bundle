@@ -1,0 +1,2 @@
+bundles:
+  - { name: Aligent\FeesBundle\AligentFeesBundle, priority: 250 }

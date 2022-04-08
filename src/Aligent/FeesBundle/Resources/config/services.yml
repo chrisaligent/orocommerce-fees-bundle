@@ -1,0 +1,35 @@
+services:
+
+    aligent_fees.fee_provider_registry:
+        class: Aligent\FeesBundle\Fee\Provider\FeeProviderRegistry
+        public: false
+
+    # Factory to generate CheckoutLineItemFees
+    Aligent\FeesBundle\Fee\Factory\CheckoutLineItemFeeFactory:
+        arguments:
+            - '@oro_product.repository.product_unit'
+
+    Aligent\FeesBundle\Fee\Provider\AbstractLineItemFeeProvider:
+        abstract: true
+        public: true
+        arguments:
+            - '@oro_config.manager'
+            - '@translator'
+            - '@oro_currency.rounding.price_rounding_service'
+            - '@Aligent\FeesBundle\Fee\Factory\CheckoutLineItemFeeFactory'
+
+    # Event Listener - Inject Fees into Checkout (if applicable)
+    Aligent\FeesBundle\EventListener\CreateCheckoutListener:
+        arguments:
+            - '@aligent_fees.fee_provider_registry'
+            - '@doctrine'
+        tags:
+            - { name: kernel.event_listener, event: extendable_condition.start_checkout, method: onStartCheckoutConditionCheck }
+
+    # Decorate Oro Order Tax Handler to support Freeform Line Items
+    Aligent\FeesBundle\ContextHandler\FreeFormAwareTaxOrderLineItemHandler:
+        parent: oro_tax.order_tax.context_handler.order_line_item_handler
+        decorates: oro_tax.order_tax.context_handler.order_line_item_handler
+        decoration_inner_name: 'oro_tax.order_tax.context_handler.order_line_item_handler.inner'
+        calls:
+            - ['setConfigManager', ['@oro_config.manager']]
