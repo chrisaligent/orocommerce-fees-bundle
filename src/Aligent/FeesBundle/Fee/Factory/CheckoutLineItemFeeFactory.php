@@ -11,7 +11,6 @@ namespace Aligent\FeesBundle\Fee\Factory;
 
 use Aligent\FeesBundle\Fee\Model\FeeLineItemDTO;
 use Oro\Bundle\CheckoutBundle\Entity\CheckoutLineItem;
-use Oro\Bundle\CurrencyBundle\Entity\Price;
 use Oro\Bundle\ProductBundle\Entity\ProductUnit;
 use Oro\Bundle\ProductBundle\Entity\Repository\ProductUnitRepository;
 
@@ -44,13 +43,10 @@ class CheckoutLineItemFeeFactory
 
     public function create(FeeLineItemDTO $feeLineItemDTO): CheckoutLineItem
     {
-        $price = Price::create(
-            (string)$feeLineItemDTO->getAmount(),
-            $feeLineItemDTO->getCurrency()
-        );
-
         /** @var ProductUnit $productUnit */
         $productUnit = $this->getProductUnit($feeLineItemDTO->getProductUnitCode());
+
+        $price = $feeLineItemDTO->getPrice();
 
         $lineItem = new CheckoutLineItem();
         $lineItem

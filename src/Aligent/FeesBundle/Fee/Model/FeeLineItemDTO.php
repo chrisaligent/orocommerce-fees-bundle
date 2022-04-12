@@ -9,13 +9,15 @@
  */
 namespace Aligent\FeesBundle\Fee\Model;
 
+use Oro\Bundle\CurrencyBundle\Entity\Price;
+
 class FeeLineItemDTO
 {
-    protected float $amount;
-    protected string $currency;
-    protected string $productSku;
-    protected string $productUnitCode;
-    protected string $label;
+    protected ?float $amount = null;
+    protected ?string $currency = null;
+    protected ?string $productSku = null;
+    protected ?string $productUnitCode = null;
+    protected ?string $label = null;
 
     public function getAmount(): ?float
     {
@@ -70,5 +72,17 @@ class FeeLineItemDTO
     {
         $this->label = $label;
         return $this;
+    }
+
+    public function getPrice(): ?Price
+    {
+        if (!$this->getCurrency() || !$this->getAmount()) {
+            return null;
+        }
+
+        return Price::create(
+            (string)$this->getAmount(),
+            $this->getCurrency()
+        );
     }
 }

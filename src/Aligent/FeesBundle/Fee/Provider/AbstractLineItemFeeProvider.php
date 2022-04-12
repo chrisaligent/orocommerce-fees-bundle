@@ -57,4 +57,9 @@ abstract class AbstractLineItemFeeProvider implements LineItemFeeProviderInterfa
     {
         return FeeProviderInterface::TYPE_LINE_ITEM;
     }
+
+    public function setCheckoutLineItemFeeFactory(CheckoutLineItemFeeFactory $checkoutLineItemFeeFactory): void
+    {
+        $this->checkoutLineItemFeeFactory = $checkoutLineItemFeeFactory;
+    }
 }

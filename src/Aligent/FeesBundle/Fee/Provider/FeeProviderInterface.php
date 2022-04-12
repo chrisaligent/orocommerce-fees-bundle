@@ -10,8 +10,10 @@
 namespace Aligent\FeesBundle\Fee\Provider;
 
 use Oro\Bundle\CheckoutBundle\Entity\Checkout;
-use Oro\Bundle\CheckoutBundle\Entity\CheckoutLineItem;
 
+/**
+ * NOTE: This interface should not be used directly, instead extend one of the Abstract Fee providers.
+ */
 interface FeeProviderInterface
 {
     public const TYPE_LINE_ITEM = 'lineItem';
