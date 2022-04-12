@@ -143,8 +143,9 @@ Core Overrides & Extensions
 Roadmap / Remaining Tasks
 -------------------
 - [x] OroCommerce 5.0 Support
-- [ ] Implement Unit Tests
+- [x] Implement Unit Tests
+- [ ] Complete adding support for Fees added as Subtotals
 - [ ] Add Native Support for Payment Processing Fees
 - [ ] Re-implement support for line item messaging
 - [ ] Convert Product Tax Code Configuration into Select field
-
+- [ ] (TBC) Add support for Expression Language

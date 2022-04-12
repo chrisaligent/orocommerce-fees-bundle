@@ -13,6 +13,9 @@ use Aligent\FeesBundle\Fee\Model\FeeLineItemDTO;
 use Oro\Bundle\CheckoutBundle\Entity\Checkout;
 use Oro\Bundle\CheckoutBundle\Entity\CheckoutLineItem;
 
+/**
+ * NOTE: This interface should not be used directly, instead extend one of the Abstract Fee providers.
+ */
 interface LineItemFeeProviderInterface extends FeeProviderInterface
 {
     /**

@@ -24,12 +24,12 @@ use Oro\Component\Action\Event\ExtendableConditionEvent;
 class CreateCheckoutListener
 {
     protected FeeProviderRegistry $feeRegistry;
-    protected ManagerRegistry $registry;
+    protected ManagerRegistry $managerRegistry;
 
     public function __construct(FeeProviderRegistry $feeRegistry, ManagerRegistry $registry)
     {
         $this->feeRegistry = $feeRegistry;
-        $this->registry = $registry;
+        $this->managerRegistry = $registry;
     }
 
     public function onStartCheckoutConditionCheck(ExtendableConditionEvent $event): bool
@@ -51,7 +51,7 @@ class CreateCheckoutListener
             }
 
             foreach ($provider->getCheckoutLineItems($checkout) as $lineItem) {
-                // Fee has generated one or more LineItems, inject them into to Checkout
+                // Fee has generated one or more LineItems, inject them into Checkout
                 $checkout->addLineItem($lineItem);
                 $needsFlush = true;
             }
@@ -67,7 +67,7 @@ class CreateCheckoutListener
          * If any LineItems (fees) have been injected, manually persist the Checkout entity.
          */
         if ($needsFlush) {
-            $manager = $this->registry->getManagerForClass(Checkout::class);
+            $manager = $this->managerRegistry->getManagerForClass(Checkout::class);
             $manager->persist($checkout);
             $manager->flush();
         }

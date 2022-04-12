@@ -33,7 +33,7 @@ class FeeProviderPass implements CompilerPassInterface
 
         $registryDefinition = $container->getDefinition(self::REGISTRY_SERVICE);
 
-        // Sort by Priority (if set)
+        // Sort by Priority (if set), Ascending
         $feeProviders = [];
         foreach ($taggedServices as $serviceId => $tags) {
             $priority = $tags[0][self::PRIORITY] ?? 0;
