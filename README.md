@@ -1,4 +1,4 @@
-Aligent Fees Bundle
+Aligent OroCommerce Fees Bundle
 ==============================
 This Bundle adds the ability to dynamically inject 'fees' as new Line Items into the Checkout process.
 
@@ -13,6 +13,7 @@ Requirements
 
 Important Notes/Caveats
 -------------------
+* This bundle does not currently include any Fees, these must be implemented manually.
 * The Line Item which is added to the cart is _not_ a real product.
   We utilize the 'FreeForm Line Item' feature in Oro Checkouts.
   This allows the price and description to be set by the fee itself,
