@@ -1,5 +1,5 @@
 {
-    "name": "aligent/fees-bundle",
+    "name": "aligent/orocommerce-fees-bundle",
     "description": "OroCommerce Bundle to charge Fees during Checkout",
     "autoload": {
         "psr-4": {
