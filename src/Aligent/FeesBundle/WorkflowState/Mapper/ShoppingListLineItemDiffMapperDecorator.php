@@ -35,10 +35,10 @@ class ShoppingListLineItemDiffMapperDecorator extends ShoppingListLineItemDiffMa
     }
 
     /**
-     * @param $entity
+     * @param mixed $entity
      * @return array<string>|null
      */
-    public function getCurrentState($entity): ?array
+    public function getCurrentState(mixed $entity): ?array
     {
         if ($this->entityContainsFreeformLineItems($entity)) {
             /**
@@ -52,7 +52,7 @@ class ShoppingListLineItemDiffMapperDecorator extends ShoppingListLineItemDiffMa
     }
 
     /**
-     * Determine if entity contains Freeform LineItems
+     * Determine if $entity contains Freeform LineItems
      * (ie LineItems without a Product)
      */
     protected function entityContainsFreeformLineItems(mixed $entity): bool
