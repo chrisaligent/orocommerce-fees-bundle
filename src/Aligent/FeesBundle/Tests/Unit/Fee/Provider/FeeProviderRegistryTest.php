@@ -14,6 +14,22 @@ use Aligent\FeesBundle\Fee\Provider\FeeProviderRegistry;
 
 class FeeProviderRegistryTest extends \PHPUnit\Framework\TestCase
 {
+    public function testEmptyProviderCanBeQueried(): void
+    {
+        $registry = new FeeProviderRegistry();
+
+        // Confirm no fees yet
+        $this->assertEmpty($registry->getProviders());
+
+        // Try to load fees by Type, ensure this fails gracefully
+        $this->assertEmpty($registry->getProviders(FeeProviderInterface::TYPE_LINE_ITEM));
+        $this->assertEmpty($registry->getProviders(FeeProviderInterface::TYPE_SUBTOTAL));
+
+        // Accessing a specific non-existent Fee should result in an exception
+        $this->expectExceptionMessage('Fee with name "fee_1" does not exist');
+        $registry->getProvider('fee_1');
+    }
+
     public function testProvidersCanBeAddedAndAccessed(): void
     {
         /**
@@ -33,17 +49,8 @@ class FeeProviderRegistryTest extends \PHPUnit\Framework\TestCase
         $feeProvider2->expects($this->any())->method('getType')
             ->willReturn(FeeProviderInterface::TYPE_LINE_ITEM);
 
-
+        // Add both fees to Registry
         $registry = new FeeProviderRegistry();
-
-        // Confirm no fees yet
-        $this->assertEmpty($registry->getProviders());
-
-        // Accessing a non-existent Fee should result in an exception
-        $this->expectExceptionMessage('Fee with name "fee_1" does not exist');
-        $registry->getProvider('fee_1');
-
-        // Add both fees
         $registry->addProvider($feeProvider1);
         $registry->addProvider($feeProvider2);
 
@@ -54,6 +61,10 @@ class FeeProviderRegistryTest extends \PHPUnit\Framework\TestCase
         // Confirm we can also retrieve them individually by name
         $this->assertSame($feeProvider1, $registry->getProvider('fee_1'));
         $this->assertSame($feeProvider2, $registry->getProvider('fee_2'));
+
+        // Confirm we can also load them by Type
+        $this->assertCount(2, $registry->getProviders(FeeProviderInterface::TYPE_LINE_ITEM));
+        $this->assertCount(0, $registry->getProviders(FeeProviderInterface::TYPE_SUBTOTAL));
     }
 
     public function testFeesCannotBeRegisteredTwice(): void

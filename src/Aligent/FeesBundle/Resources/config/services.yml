@@ -33,3 +33,9 @@ services:
         decoration_inner_name: 'oro_tax.order_tax.context_handler.order_line_item_handler.inner'
         calls:
             - ['setConfigManager', ['@oro_config.manager']]
+
+    Aligent\FeesBundle\WorkflowState\Mapper\ShoppingListLineItemDiffMapperDecorator:
+        parent: oro_checkout.workflow_state.mapper.shopping_list_line_item
+        decorates: oro_checkout.workflow_state.mapper.shopping_list_line_item
+        calls:
+            - ['setInnerMapper', ['@Aligent\FeesBundle\WorkflowState\Mapper\ShoppingListLineItemDiffMapperDecorator.inner']]
