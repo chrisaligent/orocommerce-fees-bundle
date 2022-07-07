@@ -52,7 +52,7 @@ class ShoppingListLineItemDiffMapperDecorator extends ShoppingListLineItemDiffMa
     }
 
     /**
-     * Determine if $entity contains Freeform LineItems
+     * Determine if entity contains Freeform LineItems
      * (ie LineItems without a Product)
      */
     protected function entityContainsFreeformLineItems(mixed $entity): bool
