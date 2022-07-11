@@ -118,13 +118,13 @@ All configuration is stored in System Configuration (`oro_config_value`).
         }
     
         /**
-         * Is the fee Applicable to this Checkout?
-         * @param Checkout $checkout
+         * Is the fee Supported by this Entity?
+         * @param mixed $entity
          * @return bool
          */
-        public function isApplicable(Checkout $checkout): bool
+        public function isSupported($entity): bool
         {
-            return true;
+            return ($entity instanceof Checkout);
         }
     }
     ```
