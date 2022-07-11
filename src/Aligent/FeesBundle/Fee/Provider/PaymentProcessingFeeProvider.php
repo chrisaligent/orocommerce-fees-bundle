@@ -13,6 +13,7 @@ use Aligent\FeesBundle\DependencyInjection\Configuration;
 use Brick\Math\BigDecimal;
 use Doctrine\Common\Collections\ArrayCollection;
 use Oro\Bundle\CheckoutBundle\Payment\Method\EntityPaymentMethodsProvider;
+use Oro\Bundle\CurrencyBundle\Exception\InvalidRoundingTypeException;
 use Oro\Bundle\OrderBundle\Entity\Order;
 use Oro\Bundle\PricingBundle\SubtotalProcessor\Model\Subtotal;
 use Oro\Bundle\PricingBundle\SubtotalProcessor\SubtotalProviderRegistry;
@@ -44,6 +45,11 @@ class PaymentProcessingFeeProvider extends AbstractSubtotalFeeProvider
         return self::SUBTOTAL_SORT_ORDER;
     }
 
+    protected function getFeeLabel(): string
+    {
+        return $this->translator->trans('aligent.fees.checkout.subtotal.processing_fee.label');
+    }
+
     protected function getFeeAmount(mixed $entity): ?float
     {
         if (!$this->isSupported($entity)) {
@@ -62,6 +68,9 @@ class PaymentProcessingFeeProvider extends AbstractSubtotalFeeProvider
         return $fee;
     }
 
+    /**
+     * @throws InvalidRoundingTypeException
+     */
     protected function calculateProcessingFee(object $entity): ?float
     {
         if (!$this->isEnabled()) {
@@ -80,7 +89,9 @@ class PaymentProcessingFeeProvider extends AbstractSubtotalFeeProvider
 
         $amount = BigDecimal::of($subtotal->getAmount());
 
-        return $amount->multipliedBy($percentage)->toFloat();
+        $feeAmount = $amount->multipliedBy($percentage)->toFloat();
+
+        return $this->rounding->round($feeAmount);
     }
 
     /**

@@ -2,7 +2,7 @@
   "name": "aligent/orocommerce-fees-bundle",
   "description": "OroCommerce Bundle to charge Fees during Checkout",
   "type": "library",
-  "license": "GPL-3.0",
+  "license": "GPL-3.0-only",
   "autoload": {
     "psr-4": {
       "Aligent\\FeesBundle\\": "./src/Aligent/FeesBundle"

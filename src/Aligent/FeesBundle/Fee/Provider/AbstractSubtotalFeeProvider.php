@@ -56,7 +56,7 @@ abstract class AbstractSubtotalFeeProvider extends AbstractSubtotalProvider impl
         $subtotal
             ->setType($this->getName())
             ->setSortOrder($this->getSortOrder())
-            ->setLabel($this->translator->trans('aligent.fees.checkout.subtotal.processing_fee.label'))
+            ->setLabel($this->getFeeLabel())
             ->setVisible(true)
             ->setCurrency($this->getBaseCurrency($entity))
             ->setAmount($this->rounding->round($fee));
@@ -65,7 +65,7 @@ abstract class AbstractSubtotalFeeProvider extends AbstractSubtotalProvider impl
     }
 
     abstract protected function getFeeAmount(mixed $entity): ?float;
-
+    abstract protected function getFeeLabel(): string;
     abstract protected function getSortOrder(): int;
 
     public function getType(): string
