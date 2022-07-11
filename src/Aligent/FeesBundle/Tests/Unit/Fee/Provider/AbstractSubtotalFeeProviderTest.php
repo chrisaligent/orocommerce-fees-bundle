@@ -15,10 +15,10 @@ use Oro\Bundle\CheckoutBundle\Entity\Checkout;
 use Oro\Bundle\ConfigBundle\Config\ConfigManager;
 use Oro\Bundle\CurrencyBundle\Exception\InvalidRoundingTypeException;
 use Oro\Bundle\CurrencyBundle\Rounding\RoundingServiceInterface;
+use Oro\Bundle\CustomerBundle\Entity\Customer;
 use Oro\Bundle\PricingBundle\SubtotalProcessor\Model\Subtotal;
 use Oro\Bundle\PricingBundle\SubtotalProcessor\Provider\SubtotalProviderConstructorArguments;
 use Oro\Bundle\PricingBundle\Tests\Unit\SubtotalProcessor\Provider\AbstractSubtotalProviderTest;
-use Oro\Bundle\TaskBundle\Entity\Task;
 use Oro\Component\Testing\Unit\EntityTrait;
 use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -57,7 +57,7 @@ class AbstractSubtotalFeeProviderTest extends AbstractSubtotalProviderTest
     public function testUnsupportedEntityIsRejected(): void
     {
         $supportedEntity = $this->getEntity(Checkout::class);
-        $unsupportedEntity = $this->getEntity(Task::class);
+        $unsupportedEntity = $this->getEntity(Customer::class);
 
         $provider = $this->getMockBuilder(AbstractSubtotalFeeProvider::class)
             ->onlyMethods(['isSupported'])
@@ -134,7 +134,7 @@ class AbstractSubtotalFeeProviderTest extends AbstractSubtotalProviderTest
         }
     }
 
-    public function getSubtotalFeeData(): \Generator
+    public  function getSubtotalFeeData(): \Generator
     {
         yield 'No Fee Applicable' => [
             'feeAmount' => null,
