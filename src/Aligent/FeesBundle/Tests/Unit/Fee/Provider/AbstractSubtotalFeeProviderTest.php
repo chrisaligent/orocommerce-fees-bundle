@@ -134,7 +134,7 @@ class AbstractSubtotalFeeProviderTest extends AbstractSubtotalProviderTest
         }
     }
 
-    protected function getSubtotalFeeData(): \Generator
+    public function getSubtotalFeeData(): \Generator
     {
         yield 'No Fee Applicable' => [
             'feeAmount' => null,

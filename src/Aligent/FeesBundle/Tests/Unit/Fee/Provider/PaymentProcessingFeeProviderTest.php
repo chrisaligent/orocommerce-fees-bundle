@@ -15,13 +15,13 @@ use Oro\Bundle\CheckoutBundle\Payment\Method\EntityPaymentMethodsProvider;
 use Oro\Bundle\ConfigBundle\Config\ConfigManager;
 use Oro\Bundle\CurrencyBundle\Exception\InvalidRoundingTypeException;
 use Oro\Bundle\CurrencyBundle\Rounding\RoundingServiceInterface;
+use Oro\Bundle\CustomerBundle\Entity\Customer;
 use Oro\Bundle\OrderBundle\Entity\Order;
 use Oro\Bundle\PricingBundle\SubtotalProcessor\Model\Subtotal;
 use Oro\Bundle\PricingBundle\SubtotalProcessor\Provider\SubtotalProviderConstructorArguments;
 use Oro\Bundle\PricingBundle\SubtotalProcessor\SubtotalProviderRegistry;
 use Oro\Bundle\PricingBundle\SubtotalProcessor\TotalProcessorProvider;
 use Oro\Bundle\PricingBundle\Tests\Unit\SubtotalProcessor\Provider\AbstractSubtotalProviderTest;
-use Oro\Bundle\TaskBundle\Entity\Task;
 use Oro\Component\Testing\Unit\EntityTrait;
 use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -101,7 +101,7 @@ class PaymentProcessingFeeProviderTest extends AbstractSubtotalProviderTest
     public function getApplicableEntityData(): \Generator
     {
         yield 'Invalid Entity Type' => [
-            'entityClass' => Task::class,
+            'entityClass' => Customer::class,
             'expectApplicable' => false,
         ];
 
