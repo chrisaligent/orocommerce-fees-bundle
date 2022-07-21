@@ -13,11 +13,12 @@ Requirements
 
 Important Notes/Caveats
 -------------------
-* This bundle does not currently include any Fees, these must be implemented manually.
+* This bundle currently only adds a Payment Processing Fee, any other Fees must be implemented manually
+  using the provided Abstract classes/interfaces.
 * The Line Item which is added to the cart is _not_ a real product.
   We utilize the 'FreeForm Line Item' feature in Oro Checkouts.
   This allows the price and description to be set by the fee itself,
-  and avoids any possible inventory issues.
+  and avoids any possible inventory/visibility issues.
 * The process for placing a new Order (**ShoppingList => Checkout => Order**)
   is slightly different to the process for Re-Ordering an
   existing Order (**Order => Checkout => Order**).
@@ -29,9 +30,15 @@ Installation and Usage
 **NOTE: Adjust instructions as needed for your local environment**
 
 ### Installation
-*Currently, this Bundle is not available via Composer and must be installed manually into the application*
+Install via Composer
+```shell
+composer require aligent/orocommerce-fees-bundle
+```
 
-Once installed, clear Oro cache to load bundle.
+Once installed, run platform update to perform the installation:
+```shell
+php bin/console oro:platform:update --env=prod
+```
 
 ### Configuration
 1. Login to the Oro Admin
@@ -46,12 +53,30 @@ our `ContextHandler\FreeFormAwareTaxOrderLineItemHandler` to apply the correct t
 
 Database Modifications
 -------------------
-*This Bundle does not directly modify the database schema in any way*
+* Adds a new `processing_fee` column to the `oro_order` database table (and extends the Oro `Order` entity)
 
 All configuration is stored in System Configuration (`oro_config_value`).
 
+### Payment Processing Fees
+This feature allows OroCommerce to charge an additional percentage for payments made via specific methods.
 
-### Adding and Registering new Fees
+The percentage can be configured on a per-Method basis, eg:
+* 1.5% fee for VISA/MasterCard Credit Card Payments
+* 2.0% fee for AMEX Credit Card Payments
+
+After installation, visit the System Configuration (or Website Configuration to configure on a per-Website scope).
+
+Each Payment Method will be visible here. Set the Percentage to a value above `0` to charge a processing fee for that method:
+
+<img src="src/Aligent/FeesBundle/Resources/doc/img/processing-fees-configuration.png" alt="Processing Fees Configuration">
+
+If the Customer chooses that method during the Checkout, a processing fee will be calculated and add to the Subtotals:
+
+<img src="src/Aligent/FeesBundle/Resources/doc/img/processing-fees-subtotal.png" alt="Processing Fees Subtotal">
+
+**NOTE: Processing Fees are not currently support by PayPal Express as they are not included in the Subtotal, which causes a payment validation error**
+
+### Adding and Registering new Custom Fees
 1. Create a new Bundle (or use an existing one as needed)
 1. Create a new class for the fee (eg `MyBundle\Fee\HandlingFeeProvider`).
    This new class should extend `Aligent\FeesBundle\Fee\AbstractLineItemFee`.
@@ -118,13 +143,13 @@ All configuration is stored in System Configuration (`oro_config_value`).
         }
     
         /**
-         * Is the fee Applicable to this Checkout?
-         * @param Checkout $checkout
+         * Is the fee Supported by this Entity?
+         * @param mixed $entity
          * @return bool
          */
-        public function isApplicable(Checkout $checkout): bool
+        public function isSupported($entity): bool
         {
-            return true;
+            return ($entity instanceof Checkout);
         }
     }
     ```
@@ -145,8 +170,10 @@ Roadmap / Remaining Tasks
 -------------------
 - [x] OroCommerce 5.0 Support
 - [x] Implement Unit Tests
-- [ ] Complete adding support for Fees added as Subtotals
-- [ ] Add Native Support for Payment Processing Fees
+- [x] Complete adding support for Fees added as Subtotals
+- [x] Add Native Support for Payment Processing Fees
+- [ ] Add support for PayPal Express Processing Fees
 - [ ] Re-implement support for line item messaging
 - [ ] Convert Product Tax Code Configuration into Select field
+- [ ] More fine-grained control over Processing Fees (eg exclude certain Customer Groups from being charged fee)
 - [ ] (TBC) Add support for Expression Language

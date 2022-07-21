@@ -1,19 +1,31 @@
 system_configuration:
     groups:
         aligent:
-            title: 'Aligent'
+            title: aligent.fees.configuration.group_title.label
         aligent_fees:
-            title: 'Fees'
+            title: aligent.fees.configuration.aligent_fees.title.label
             icon: 'fa-usd'
         configuration_segment:
-            title: 'Configuration'
+            title: aligent.fees.configuration.aligent_fees.configuration.segment_title.label
+        processing_fee_segment:
+            title: aligent.fees.configuration.aligent_fees.processing_fee.segment_title.label
     fields:
         aligent_fees.default_product_tax_code:
             data_type: string
             type: Symfony\Component\Form\Extension\Core\Type\TextType
             priority: 10
             options:
-                label: 'Default Product Tax Code'
+                label: aligent.fees.configuration.aligent_fees.configuration.default_product_tax_code.label
+        aligent_fees.processing_fee_enabled:
+            data_type: boolean
+            type: Symfony\Component\Form\Extension\Core\Type\CheckboxType
+            options:
+                label: aligent.fees.configuration.aligent_fees.processing_fee.fields.enabled.label
+        aligent_fees.processing_fee_payment_methods:
+            data_type: array
+            type: Aligent\FeesBundle\Form\Type\ProcessingFeeCollectionType
+            options:
+                label: aligent.fees.configuration.aligent_fees.processing_fee.fields.payment_methods.label
     tree:
         system_configuration:
             commerce:
@@ -25,6 +37,10 @@ system_configuration:
                                     configuration_segment:
                                         children:
                                             - aligent_fees.default_product_tax_code
+                                    processing_fee_segment:
+                                        children:
+                                            - aligent_fees.processing_fee_enabled
+                                            - aligent_fees.processing_fee_payment_methods
 
         website_configuration:
             commerce:
@@ -36,3 +52,7 @@ system_configuration:
                                     configuration_segment:
                                         children:
                                             - aligent_fees.default_product_tax_code
+                                    processing_fee_segment:
+                                        children:
+                                            - aligent_fees.processing_fee_enabled
+                                            - aligent_fees.processing_fee_payment_methods

@@ -37,6 +37,14 @@ class ConfigurationTest extends \PHPUnit\Framework\TestCase
                     'value' => null,
                     'scope' => 'app'
                 ],
+                'processing_fee_enabled' => [
+                    'value' => false,
+                    'scope' => 'app'
+                ],
+                'processing_fee_payment_methods' => [
+                    'value' => [],
+                    'scope' => 'app'
+                ],
             ]
         ];
 

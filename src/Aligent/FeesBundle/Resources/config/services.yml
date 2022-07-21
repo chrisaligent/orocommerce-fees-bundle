@@ -18,6 +18,37 @@ services:
             - '@oro_currency.rounding.price_rounding_service'
             - '@Aligent\FeesBundle\Fee\Factory\CheckoutLineItemFeeFactory'
 
+    # Subtotal Fee Providers
+    Aligent\FeesBundle\Fee\Provider\AbstractSubtotalFeeProvider:
+        abstract: true
+        public: false
+        arguments:
+            - '@oro_pricing.subtotal_processor.provider.arguments'
+            - '@oro_config.manager'
+            - '@translator'
+            - '@oro_currency.rounding.price_rounding_service'
+
+    Aligent\FeesBundle\Fee\Provider\PaymentProcessingFeeProvider:
+        parent: Aligent\FeesBundle\Fee\Provider\AbstractSubtotalFeeProvider
+        calls:
+            - ['setEntityPaymentMethodsProvider', ['@oro_checkout.payment_methods_provider']]
+            - ['setSubtotalProviderRegistry', ['@oro_pricing.subtotal_processor.subtotal_provider_registry']]
+            - ['setTotalProcessorProvider', ['@oro_pricing.subtotal_processor.total_processor_provider']]
+        tags:
+            - { name: oro_pricing.subtotal_provider, alias: aligent_fees.subtotal_payment_processing_fee, priority: 5000 }
+
+    # Form Types
+    Aligent\FeesBundle\Form\Type\ProcessingFeeType:
+        tags:
+            - { name: form.type, alias: aligent_processing_fee }
+
+    Aligent\FeesBundle\Form\Type\ProcessingFeeCollectionType:
+        arguments:
+            - '@oro_payment.payment_method.composite_provider'
+            - '@oro_payment.payment_method_view.composite_provider'
+        tags:
+            - { name: form.type, alias: aligent_processing_fee_collection }
+
     # Event Listener - Inject Fees into Checkout (if applicable)
     Aligent\FeesBundle\EventListener\CreateCheckoutListener:
         arguments:
