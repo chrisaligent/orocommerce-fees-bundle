@@ -44,7 +44,7 @@ class FeeProviderRegistry
     public function getProviders(?string $type = null): array
     {
         if ($type) {
-            return $this->providersByType[$type];
+            return $this->providersByType[$type] ?? [];
         }
 
         return $this->providers;

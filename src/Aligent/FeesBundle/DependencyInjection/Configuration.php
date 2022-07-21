@@ -20,6 +20,9 @@ class Configuration implements ConfigurationInterface
     const ROOT_NODE = 'aligent_fees';
     const DEFAULT_PRODUCT_TAX_CODE = 'default_product_tax_code';
 
+    const PROCESSING_FEE_ENABLED = 'processing_fee_enabled';
+    const PROCESSING_FEE_PAYMENT_METHODS = 'processing_fee_payment_methods';
+
     public function getConfigTreeBuilder(): TreeBuilder
     {
         $treeBuilder = new TreeBuilder(self::ROOT_NODE);
@@ -31,6 +34,9 @@ class Configuration implements ConfigurationInterface
             $rootNode,
             [
                 self::DEFAULT_PRODUCT_TAX_CODE => ['type' => 'string', 'value' => null],
+
+                self::PROCESSING_FEE_ENABLED => ['type' => 'boolean', 'value' => false],
+                self::PROCESSING_FEE_PAYMENT_METHODS => ['type' => 'array', 'value' => []],
             ]
         );
 

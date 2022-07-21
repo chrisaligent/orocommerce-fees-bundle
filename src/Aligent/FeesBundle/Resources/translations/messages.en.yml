@@ -1,0 +1,22 @@
+aligent:
+    fees:
+        configuration:
+            group_title.label: 'Aligent'
+            aligent_fees:
+                title.label: 'Fees'
+                configuration:
+                    segment_title.label: 'Configuration'
+                    default_product_tax_code.label: 'Default Product Tax Code'
+
+                processing_fee:
+                    segment_title.label: 'Processing Fees'
+                    fields:
+                        enabled.label: 'Enable Processing Fees'
+                        payment_methods.label: 'Enable for Payment Methods (NOTE: PayPal Express is NOT Supported!)'
+                        method.label: 'Payment Method'
+                        percentage.label: 'Processing Fee Percentage'
+
+        checkout:
+            subtotal:
+                processing_fee.label: 'Payment Processing Fee'
+

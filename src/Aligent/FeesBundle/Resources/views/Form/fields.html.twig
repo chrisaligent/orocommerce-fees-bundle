@@ -1,0 +1,39 @@
+{% block aligent_processing_fee_collection_widget %}
+    <table class="grid table-hover table table-bordered">
+        <thead>
+        <tr>
+            <th>
+                <span>{{ 'aligent.fees.configuration.aligent_fees.processing_fee.fields.method.label'|trans }}</span>
+            </th>
+            <th>
+                <span>{{ 'aligent.fees.configuration.aligent_fees.processing_fee.fields.percentage.label'|trans }}</span>
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        {% if form.children|length %}
+            {% for child in form.children %}
+                <tr>
+                    {{ form_widget(child) }}
+                </tr>
+            {% endfor %}
+        {% endif %}
+        </tbody>
+    </table>
+{% endblock %}
+
+{% block aligent_processing_fee_widget %}
+    {% import '@OroUI/macros.html.twig' as UI %}
+
+    <td>
+        {{ form_widget(form.method) }}
+
+        <span>{{ form.vars.value.label|trans }}</span>
+
+        {{ form_errors(form.method) }}
+    </td>
+    <td>
+        {{ form_widget(form.percentage) }}
+        {{ form_errors(form.percentage) }}
+    </td>
+{% endblock %}
