@@ -12,11 +12,14 @@ aligent:
                     segment_title.label: 'Processing Fees'
                     fields:
                         enabled.label: 'Enable Processing Fees'
-                        payment_methods.label: 'Enable for Payment Methods (NOTE: PayPal Express is NOT Supported!)'
+                        payment_methods:
+                            label: 'Enable for Payment Methods (NOTE: PayPal is NOT Supported!)'
+                            tooltip: |
+                                The PayPal User Agreement does not allow charging processing fees for PayPal Payments<br><br>
+                                See https://github.com/aligent/orocommerce-fees-bundle/issues/13
                         method.label: 'Payment Method'
                         percentage.label: 'Processing Fee Percentage'
 
         checkout:
             subtotal:
                 processing_fee.label: 'Payment Processing Fee'
-

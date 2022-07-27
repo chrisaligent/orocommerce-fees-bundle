@@ -22,6 +22,19 @@ class ProcessingFeeCollectionType extends AbstractType
 {
     const NAME = 'aligent_processing_fee_collection';
 
+    /**
+     * Methods which are not allowed/supported, either for technical reasons
+     * or because Processing Fees are against their User Agreement.
+     *
+     * NOTE: Method class names must be declared as strings here in case
+     *       payment method bundle has not been installed.
+     */
+    const DISALLOWED_METHODS = [
+        'Oro\Bundle\PayPalExpressBundle\Method\PayPalExpressMethod',
+        'Oro\Bundle\PayPalBundle\Method\PayPalCreditCardPaymentMethod',
+        'Oro\Bundle\PayPalBundle\Method\PayPalExpressCheckoutPaymentMethod',
+    ];
+
     protected PaymentMethodProviderInterface $methodProvider;
     protected PaymentMethodViewProviderInterface $methodViewProvider;
 
@@ -84,6 +97,11 @@ class ProcessingFeeCollectionType extends AbstractType
     {
         $result = [];
         foreach ($this->methodProvider->getPaymentMethods() as $method) {
+            if (in_array(get_class($method), self::DISALLOWED_METHODS)) {
+                // Skip disallowed methods (e.g. PayPal)
+                continue;
+            }
+
             $methodId = $method->getIdentifier();
             $label = $this
                 ->methodViewProvider->getPaymentMethodView($methodId)
