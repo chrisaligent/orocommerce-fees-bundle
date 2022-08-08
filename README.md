@@ -7,6 +7,8 @@ For example, if a 'Handling Fee' is to be charged for orders under $100.
 This Bundle takes advantage of OroCommerce's 'Freeform LineItem' feature,
 where a LineItem can be added to the Checkout without being linked to a Product.
 
+It also supports Fees added as Subtotals against the entire Order.
+
 Requirements
 -------------------
 - OroCommerce 5.0
@@ -74,7 +76,10 @@ If the Customer chooses that method during the Checkout, a processing fee will b
 
 <img src="src/Aligent/FeesBundle/Resources/doc/img/processing-fees-subtotal.png" alt="Processing Fees Subtotal">
 
-**NOTE: Processing Fees are not currently support by PayPal Express as they are not included in the Subtotal, which causes a payment validation error**
+**NOTE: Processing Fees are not currently support by PayPal Express as they are not included in the Subtotal, which causes a payment validation error.**
+
+Additionally, the [PayPal User Agreement](https://www.paypal.com/us/webapps/mpp/ua/useragreement-full) does not allow charging Payment Processing Fees (See [#13](https://github.com/aligent/orocommerce-fees-bundle/issues/13))
+
 
 ### Adding and Registering new Custom Fees
 1. Create a new Bundle (or use an existing one as needed)
@@ -172,8 +177,8 @@ Roadmap / Remaining Tasks
 - [x] Implement Unit Tests
 - [x] Complete adding support for Fees added as Subtotals
 - [x] Add Native Support for Payment Processing Fees
-- [ ] Add support for PayPal Express Processing Fees
+- [x] ~~Add support for PayPal Express Processing Fees~~ (See [#13](https://github.com/aligent/orocommerce-fees-bundle/issues/13))
 - [ ] Re-implement support for line item messaging
 - [ ] Convert Product Tax Code Configuration into Select field
-- [ ] More fine-grained control over Processing Fees (eg exclude certain Customer Groups from being charged fee)
+- [ ] More fine-grained control over Processing Fees (e.g. exclude certain Customer Groups from being charged fee)
 - [ ] (TBC) Add support for Expression Language
