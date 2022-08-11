@@ -23,7 +23,7 @@
   "minimum-stability": "dev",
   "prefer-stable": true,
   "require": {
-    "oro/commerce": "~5.0.4"
+    "oro/commerce": "~5.0.6"
   },
   "require-dev": {
     "phpunit/phpunit": "^9.5",
