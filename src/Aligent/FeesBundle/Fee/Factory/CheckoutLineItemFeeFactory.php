@@ -58,7 +58,8 @@ class CheckoutLineItemFeeFactory
             ->setFreeFormProduct($feeLineItemDTO->getLabel()) // Must be a Free Form product
             ->setProductSku($feeLineItemDTO->getProductSku())
             ->setProductUnit($productUnit)
-            ->setProductUnitCode($productUnit->getCode());
+            ->setProductUnitCode($productUnit->getCode())
+        ;
 
         return $lineItem;
     }

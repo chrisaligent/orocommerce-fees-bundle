@@ -23,6 +23,8 @@ abstract class AbstractLineItemFeeProvider implements LineItemFeeProviderInterfa
     protected TranslatorInterface $translator;
     protected RoundingServiceInterface $rounding;
     protected CheckoutLineItemFeeFactory $checkoutLineItemFeeFactory;
+    /** @var array<FeeLineItemDTO>|null  */
+    protected ?array $feeLineItems = null;
 
     public function __construct(
         ConfigManager $configManager,
@@ -37,6 +39,14 @@ abstract class AbstractLineItemFeeProvider implements LineItemFeeProviderInterfa
     }
 
     /**
+     * This method should use the passed Checkout instance to conditionally
+     * inject Fees using $this->>addFeeLineItem();
+     * @param Checkout $checkout
+     * @return void
+     */
+    abstract protected function buildFees(Checkout $checkout): void;
+
+    /**
      * Creates one or more Checkout Line Item for Fee.
      * Fee optionally based on Checkout instance
      * @return array<CheckoutLineItem>
@@ -45,13 +55,45 @@ abstract class AbstractLineItemFeeProvider implements LineItemFeeProviderInterfa
     {
         return $this
             ->checkoutLineItemFeeFactory
-            ->createMultiple($this->buildFees($checkout));
+            ->createMultiple($this->getFeeLineItems($checkout));
     }
 
     /**
+     * @return FeeLineItemDTO[]
+     */
+    public function getFeeLineItems(Checkout $checkout): array
+    {
+        if (is_null($this->feeLineItems)) {
+            // Only build fees once (if not null)
+            $this->feeLineItems = [];
+            $this->buildFees($checkout);
+        }
+
+        return $this->feeLineItems;
+    }
+
+    protected function addFeeLineItem(FeeLineItemDTO $feeLineItemDTO): void
+    {
+        $this->feeLineItems[] = $feeLineItemDTO;
+    }
+
+    /**
+     * @param Checkout $checkout
      * @return array<FeeLineItemDTO>
      */
-    abstract public function buildFees(Checkout $checkout): array;
+    public function getMessages(Checkout $checkout): array
+    {
+        $messages = [];
+        $fees = $this->getFeeLineItems($checkout);
+        foreach ($fees as $feeLineItemDTO) {
+            if (!$feeLineItemDTO->hasMessage()) {
+                continue;
+            }
+            $messages[] = $feeLineItemDTO;
+        }
+
+        return $messages;
+    }
 
     public function getType(): string
     {

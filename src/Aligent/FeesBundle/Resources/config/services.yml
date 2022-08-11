@@ -57,6 +57,12 @@ services:
         tags:
             - { name: kernel.event_listener, event: extendable_condition.start_checkout, method: onStartCheckoutConditionCheck }
 
+    Aligent\FeesBundle\EventListener\LineItemFeeMessageListener:
+        arguments:
+            - '@aligent_fees.fee_provider_registry'
+        tags:
+            - { name: kernel.event_listener, event: line_item.validate, method: onLineItemValidate, priority: 10 }
+
     # Decorate Oro Order Tax Handler to support Freeform Line Items
     Aligent\FeesBundle\ContextHandler\FreeFormAwareTaxOrderLineItemHandler:
         parent: oro_tax.order_tax.context_handler.order_line_item_handler

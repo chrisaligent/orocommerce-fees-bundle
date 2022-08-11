@@ -9,9 +9,6 @@
  */
 namespace Aligent\FeesBundle\Fee\Provider;
 
-use Aligent\FeesBundle\Fee\Model\FeeLineItemDTO;
-use Oro\Bundle\CheckoutBundle\Entity\Checkout;
-use Oro\Bundle\CheckoutBundle\Entity\CheckoutLineItem;
 use Oro\Bundle\PricingBundle\SubtotalProcessor\Model\SubtotalProviderInterface;
 
 /**
