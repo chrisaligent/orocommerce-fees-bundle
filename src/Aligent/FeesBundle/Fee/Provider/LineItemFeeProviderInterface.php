@@ -26,5 +26,11 @@ interface LineItemFeeProviderInterface extends FeeProviderInterface
     /**
      * @return array<FeeLineItemDTO>
      */
-    public function buildFees(Checkout $checkout): array;
+    public function getFeeLineItems(Checkout $checkout): array;
+
+    /**
+     * @param Checkout $checkout
+     * @return array<FeeLineItemDTO>
+     */
+    public function getMessages(Checkout $checkout): array;
 }

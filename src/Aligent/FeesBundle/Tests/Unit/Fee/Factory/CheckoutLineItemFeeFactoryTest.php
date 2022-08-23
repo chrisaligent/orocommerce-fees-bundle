@@ -68,7 +68,6 @@ class CheckoutLineItemFeeFactoryTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expectedLineItemData['productUnitCode'], $lineItem->getProductUnit()->getCode());
         $this->assertEquals($expectedLineItemData['productUnitCode'], $lineItem->getProductUnitCode());
 
-
         $this->assertInstanceOf(Price::class, $lineItem->getPrice());
         $this->assertEquals($expectedLineItemData['amount'], $lineItem->getPrice()->getValue());
         $this->assertEquals($expectedLineItemData['currency'], $lineItem->getPrice()->getCurrency());
@@ -137,7 +136,7 @@ class CheckoutLineItemFeeFactoryTest extends \PHPUnit\Framework\TestCase
     {
         yield 'Test Multiple Fees' => [
             'feeConfigData' => [
-                'handling Fee 1' => [
+                'Handling Fee 1' => [
                     'currency' => 'USD',
                     'amount' => 123.45,
                     'label' => 'Handling Fee 1',

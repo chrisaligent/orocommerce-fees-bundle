@@ -18,13 +18,14 @@ class FeeLineItemDTO
     protected ?string $productSku = null;
     protected ?string $productUnitCode = null;
     protected ?string $label = null;
+    protected ?string $message = null;
 
     public function getAmount(): ?float
     {
         return $this->amount;
     }
 
-    public function setAmount(float $amount): FeeLineItemDTO
+    public function setAmount(float $amount): static
     {
         $this->amount = $amount;
         return $this;
@@ -35,7 +36,7 @@ class FeeLineItemDTO
         return $this->currency;
     }
 
-    public function setCurrency(string $currency): FeeLineItemDTO
+    public function setCurrency(string $currency): static
     {
         $this->currency = $currency;
         return $this;
@@ -46,7 +47,7 @@ class FeeLineItemDTO
         return $this->productSku;
     }
 
-    public function setProductSku(string $productSku): FeeLineItemDTO
+    public function setProductSku(string $productSku): static
     {
         $this->productSku = $productSku;
         return $this;
@@ -57,7 +58,7 @@ class FeeLineItemDTO
         return $this->productUnitCode;
     }
 
-    public function setProductUnitCode(string $productUnitCode): FeeLineItemDTO
+    public function setProductUnitCode(string $productUnitCode): static
     {
         $this->productUnitCode = $productUnitCode;
         return $this;
@@ -68,7 +69,7 @@ class FeeLineItemDTO
         return $this->label;
     }
 
-    public function setLabel(string $label): FeeLineItemDTO
+    public function setLabel(string $label): static
     {
         $this->label = $label;
         return $this;
@@ -84,5 +85,21 @@ class FeeLineItemDTO
             (string)$this->getAmount(),
             $this->getCurrency()
         );
+    }
+
+    public function getMessage(): ?string
+    {
+        return $this->message;
+    }
+
+    public function hasMessage(): bool
+    {
+        return (bool)$this->message;
+    }
+
+    public function setMessage(?string $message): static
+    {
+        $this->message = $message;
+        return $this;
     }
 }

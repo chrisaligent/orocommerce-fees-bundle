@@ -28,15 +28,22 @@ class AbstractLineItemFeeProviderTest extends \PHPUnit\Framework\TestCase
 
         $provider = $this->getMockBuilder(AbstractLineItemFeeProvider::class)
             ->disableOriginalConstructor()
-            ->onlyMethods(['buildFees'])
+            ->onlyMethods(['getFeeLineItems'])
             ->getMockForAbstractClass();
         $provider->setCheckoutLineItemFeeFactory($factory);
 
         // Create two empty FeeLineItemDTO's
         $lineItemDTOs = [new FeeLineItemDTO(),new FeeLineItemDTO()];
 
+        // Add another FeeLineItemDTO with a Message
+        $lineItemDTOWithMessage = (new FeeLineItemDTO())
+            ->setProductSku('MSG-01')
+            ->setLabel('Fee with a Message')
+            ->setMessage('This is a test Message');
+        $lineItemDTOs[] = $lineItemDTOWithMessage;
+
         $provider->expects($this->any())
-            ->method('buildFees')
+            ->method('getFeeLineItems')
             ->willReturn($lineItemDTOs);
 
         // Assert that calling getCheckoutLineItems() will try to create multiple Line Items
@@ -47,6 +54,13 @@ class AbstractLineItemFeeProviderTest extends \PHPUnit\Framework\TestCase
         // Create an empty Checkout and pass to Provider
         $checkout = $this->getEntity(Checkout::class);
         $provider->getCheckoutLineItems($checkout);
+
+        // Return the Fees which have Messages enabled
+        $messageFees = $provider->getMessages($checkout);
+        $this->assertCount(1, $messageFees);
+        $this->assertEquals($lineItemDTOWithMessage, $messageFees[0]);
+        $this->assertEquals('MSG-01', $messageFees[0]->getProductSku());
+        $this->assertEquals('This is a test Message', $messageFees[0]->getMessage());
     }
 
     public function testCorrectTypeIsReturned(): void
