@@ -23,6 +23,8 @@ class FeeLineItemDTOTest extends \PHPUnit\Framework\TestCase
         $this->assertNull($object->getProductUnitCode());
         $this->assertNull($object->getAmount());
         $this->assertNull($object->getLabel());
+        $this->assertFalse($object->hasMessage());
+        $this->assertNull($object->getMessage());
 
         $object
             ->setProductSku('ABC123')
@@ -37,11 +39,18 @@ class FeeLineItemDTOTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('each', $object->getProductUnitCode());
         $this->assertEquals(123.45, $object->getAmount());
         $this->assertEquals('Shipping Fee', $object->getLabel());
+        $this->assertFalse($object->hasMessage());
+        $this->assertNull($object->getMessage());
 
         $this->assertInstanceOf(Price::class, $object->getPrice());
         $price = $object->getPrice();
         $this->assertEquals(123.45, $price->getValue());
         $this->assertEquals('USD', $price->getCurrency());
+
+        $object->setMessage('This is a test');
+
+        $this->assertTrue($object->hasMessage());
+        $this->assertEquals('This is a test', $object->getMessage());
     }
 
     public function testPriceIsOnlyCreatedWithValidData(): void

@@ -9,8 +9,6 @@
  */
 namespace Aligent\FeesBundle\Fee\Provider;
 
-use Oro\Bundle\CheckoutBundle\Entity\Checkout;
-
 /**
  * NOTE: This interface should not be used directly, instead extend one of the Abstract Fee providers.
  */

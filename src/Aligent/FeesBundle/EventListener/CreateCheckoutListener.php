@@ -13,8 +13,8 @@
  */
 namespace Aligent\FeesBundle\EventListener;
 
-use Aligent\FeesBundle\Fee\Provider\FeeProviderRegistry;
 use Aligent\FeesBundle\Fee\Provider\FeeProviderInterface;
+use Aligent\FeesBundle\Fee\Provider\FeeProviderRegistry;
 use Aligent\FeesBundle\Fee\Provider\LineItemFeeProviderInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Oro\Bundle\ActionBundle\Model\ActionData;

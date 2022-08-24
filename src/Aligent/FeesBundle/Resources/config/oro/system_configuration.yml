@@ -26,6 +26,7 @@ system_configuration:
             type: Aligent\FeesBundle\Form\Type\ProcessingFeeCollectionType
             options:
                 label: aligent.fees.configuration.aligent_fees.processing_fee.fields.payment_methods.label
+                tooltip: aligent.fees.configuration.aligent_fees.processing_fee.fields.payment_methods.tooltip
     tree:
         system_configuration:
             commerce:
