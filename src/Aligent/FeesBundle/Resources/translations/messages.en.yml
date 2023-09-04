@@ -1,3 +1,6 @@
+oro:
+    order:
+        processing_fee.label: 'Processing Fee'
 aligent:
     fees:
         configuration:
